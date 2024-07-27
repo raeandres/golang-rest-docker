@@ -74,6 +74,7 @@ func GetAllProducts(db *sql.DB) string {
 
 	if err != nil {
 		log.Fatal("GET || Database Error: ", err)
+		return ""
 	}
 
 	// defer rows.Close()
@@ -95,6 +96,7 @@ func GetAllProducts(db *sql.DB) string {
 
 	if jsonError != nil {
 		log.Fatal("GET || JSON Parsing error: ", jsonError)
+		return ""
 	}
 
 	return string(jsonString)
@@ -111,11 +113,29 @@ func InsertProduct(db *sql.DB, product *model.Product) int {
 
 	if err != nil {
 		log.Fatal("POST || Database Error: ", err)
+		return 0
 	}
 
 	return pk
 }
 
-func UpdateProduct(db *sql.DB, product *model.Product) {
+func UpdateProduct(db *sql.DB, product *model.Product) string {
 
+	query := `UPDATE PRODUCT SET name=$1, product_type=$2, picture=$3, price=$4, description=$5 WHERE id=$6`
+
+	_, err := db.Exec(query, product.Name, product.ProductType, product.Picture, product.Price, product.Description, product.ID)
+
+	if err != nil {
+		log.Fatal("POST || Database Error: ", err)
+		return ""
+	}
+
+	jsonString, jsonError := json.Marshal(product)
+
+	if jsonError != nil {
+		log.Fatal("GET || JSON Parsing error: ", jsonError)
+		return ""
+	}
+
+	return string(jsonString)
 }

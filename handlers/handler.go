@@ -29,3 +29,16 @@ func AddProduct(c *fiber.Ctx) error {
 	addProduct := database.InsertProduct(database.DB.Db, product)
 	return c.Status(200).JSON(addProduct)
 }
+
+func EditProduct(c *fiber.Ctx) error {
+	product := new(model.Product)
+	if err := c.BodyParser(product); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"message": err.Error(),
+		})
+	}
+
+	c.Accepts("application/json")
+	updateProduct := database.UpdateProduct(database.DB.Db, product)
+	return c.Status(200).SendString(updateProduct)
+}
