@@ -53,6 +53,9 @@ db:
       - postgres-db:/var/lib/postgresql/data
 ```      
 
+#### Credentials
+``` check .env file```
+
 ### Web
 ```
 web:
