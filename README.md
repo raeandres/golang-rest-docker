@@ -38,5 +38,30 @@ go get github.com/lib/pq              - go pq
 ``` go version ```
 
 
+## Containers
+### Postgresql
+```
+db:
+    image: postgres:alpine
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres-db:/var/lib/postgresql/data
+```      
 
-
+### Web
+```
+web:
+    build: .
+    env_file:
+      - .env
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/usr/src/app
+    command: air main/main.go -b 0.0.0.0
+```
