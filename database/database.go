@@ -102,3 +102,18 @@ func GetAllProducts(db *sql.DB) string {
 	// return string(jsonString)
 
 }
+
+func InsertProduct(db *sql.DB, product *model.Product) int {
+
+	query := `INSERT INTO PRODUCT (name, product_type, picture, price, description) 
+	VALUES ($1, $2, $3, $4, $5) RETURNING id`
+
+	var pk int
+	err := db.QueryRow(query, product.Name, product.ProductType, product.Picture, product.Price, product.Description).Scan(&pk)
+
+	if err != nil {
+		log.Fatal("POST || Database Error: ", err)
+	}
+
+	return pk
+}
