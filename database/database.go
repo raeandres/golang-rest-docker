@@ -7,6 +7,7 @@ import (
 	"os"
 
 	_ "github.com/lib/pq"
+	"github.com/raeandres/golang-rest-product.git/model"
 )
 
 type DBInstance struct {
@@ -30,8 +31,6 @@ func ConnectDb() {
 	}
 
 	log.Println("Connected To Db")
-
-	defer db.Close()
 
 	log.Println("Creating tables..")
 
@@ -64,5 +63,42 @@ func createProductTable(db *sql.DB) {
 	}
 
 	log.Println("No error")
+
+}
+
+func GetAllProducts(db *sql.DB) string {
+
+	data := []model.Product{}
+	rows, err := db.Query(`SELECT name, product_type, picture, price, description FROM product`)
+
+	if err != nil {
+		log.Fatal("GET || Database Error: ", err)
+	}
+
+	// defer rows.Close()
+	// to scan DB values
+	var Name, ProductType, Picture, Description string
+	var Price float64
+
+	for rows.Next() {
+		rows.Scan(&Name, &ProductType, &Picture, &Price, &Description)
+		if err != nil {
+			log.Fatal("GET || Parsing to model Error: ", err)
+		}
+		data = append(data, model.Product{Name: Name, ProductType: ProductType, Picture: Picture, Price: Price, Description: Description})
+	}
+
+	//convert struct into json string
+	// let the JSON conversion being done in the handler layer
+
+	return fmt.Sprint(data)
+
+	// jsonString, jsonError := json.Marshal(data)
+
+	// if jsonError != nil {
+	// 	log.Fatal("GET || JSON Parsing error: ", jsonError)
+	// }
+
+	// return string(jsonString)
 
 }
