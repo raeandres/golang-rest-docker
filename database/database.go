@@ -70,7 +70,7 @@ func createProductTable(db *sql.DB) {
 func GetAllProducts(db *sql.DB) string {
 
 	data := []model.Product{}
-	rows, err := db.Query(`SELECT name, product_type, picture, price, description FROM product`)
+	rows, err := db.Query(`SELECT id, name, product_type, picture, price, description FROM product`)
 
 	if err != nil {
 		log.Fatal("GET || Database Error: ", err)
@@ -78,15 +78,15 @@ func GetAllProducts(db *sql.DB) string {
 
 	// defer rows.Close()
 	// to scan DB values
-	var Name, ProductType, Picture, Description string
+	var Id, Name, ProductType, Picture, Description string
 	var Price float64
 
 	for rows.Next() {
-		rows.Scan(&Name, &ProductType, &Picture, &Price, &Description)
+		rows.Scan(&Id, &Name, &ProductType, &Picture, &Price, &Description)
 		if err != nil {
 			log.Fatal("GET || Parsing to model Error: ", err)
 		}
-		data = append(data, model.Product{Name: Name, ProductType: ProductType, Picture: Picture, Price: Price, Description: Description})
+		data = append(data, model.Product{ID: Id, Name: Name, ProductType: ProductType, Picture: Picture, Price: Price, Description: Description})
 	}
 
 	//convert struct into json string
@@ -117,4 +117,8 @@ func InsertProduct(db *sql.DB, product *model.Product) int {
 	}
 
 	return pk
+}
+
+func UpdateProduct(db *sql.DB, product *model.Product) {
+
 }
