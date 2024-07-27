@@ -20,7 +20,7 @@ func GetProducts(c *fiber.Ctx) error {
 func AddProduct(c *fiber.Ctx) error {
 	product := new(model.Product)
 	if err := c.BodyParser(product); err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"message": err.Error(),
 		})
 	}
