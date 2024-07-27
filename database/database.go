@@ -90,9 +90,6 @@ func GetAllProducts(db *sql.DB) string {
 	}
 
 	//convert struct into json string
-	// let the JSON conversion being done in the handler layer
-
-	// return fmt.Sprint(data)
 
 	jsonString, jsonError := json.Marshal(data)
 
