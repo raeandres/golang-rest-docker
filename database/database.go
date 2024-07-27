@@ -2,6 +2,7 @@ package database
 
 import (
 	"database/sql"
+	"encoding/json"
 	"fmt"
 	"log"
 	"os"
@@ -91,15 +92,15 @@ func GetAllProducts(db *sql.DB) string {
 	//convert struct into json string
 	// let the JSON conversion being done in the handler layer
 
-	return fmt.Sprint(data)
+	// return fmt.Sprint(data)
 
-	// jsonString, jsonError := json.Marshal(data)
+	jsonString, jsonError := json.Marshal(data)
 
-	// if jsonError != nil {
-	// 	log.Fatal("GET || JSON Parsing error: ", jsonError)
-	// }
+	if jsonError != nil {
+		log.Fatal("GET || JSON Parsing error: ", jsonError)
+	}
 
-	// return string(jsonString)
+	return string(jsonString)
 
 }
 
