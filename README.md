@@ -21,8 +21,8 @@ Simple webservice that performs CRUD on a product model built using golang and p
 
 ## Dependencies
 ```
-go get github.com/gofiber/fiber/v2 	- Fiber
-go get github.com/lib/pq			- go pq
+go get github.com/gofiber/fiber/v2    - Fiber
+go get github.com/lib/pq              - go pq
 ```
 
 
