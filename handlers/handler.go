@@ -13,6 +13,7 @@ func Home(c *fiber.Ctx) error {
 func GetProducts(c *fiber.Ctx) error {
 	// return
 	products := database.GetAllProducts(database.DB.Db)
+	c.Set("Content-type", "application/json; charset=utf-8")
 	c.Accepts("application/json")
 	return c.Status(200).SendString(products)
 }
@@ -24,7 +25,7 @@ func AddProduct(c *fiber.Ctx) error {
 			"message": err.Error(),
 		})
 	}
-
+	c.Set("Content-type", "application/json; charset=utf-8")
 	c.Accepts("application/json")
 	addProduct := database.InsertProduct(database.DB.Db, product)
 	return c.Status(200).JSON(addProduct)
@@ -37,7 +38,7 @@ func EditProduct(c *fiber.Ctx) error {
 			"message": err.Error(),
 		})
 	}
-
+	c.Set("Content-type", "application/json; charset=utf-8")
 	c.Accepts("application/json")
 	updateProduct := database.UpdateProduct(database.DB.Db, product)
 	return c.Status(200).SendString(updateProduct)
