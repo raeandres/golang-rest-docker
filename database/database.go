@@ -35,13 +35,32 @@ func ConnectDb() {
 
 	log.Println("Creating tables..")
 
+	/*Create Table*/
 	createProductTable(db)
+
+	/*Drop table */
+	// tableName := "product"
+	// dropTableErr := dropTable(db, tableName)
+
+	// if dropTableErr != nil {
+	// 	log.Fatalf("Failed to drop table %s: %v", tableName, dropTableErr)
+	// }
+
+	// fmt.Printf("Table %s dropped successfully!\n", tableName)
 
 	DB = DBInstance{
 		Db: db,
 	}
 
 }
+
+// func dropTable(db *sql.DB, tableName string) error {
+
+// 	query := fmt.Sprintf("DROP TABLE IF EXISTS %s", tableName)
+// 	_, err := db.Exec(query)
+
+// 	return err
+// }
 
 func createProductTable(db *sql.DB) {
 

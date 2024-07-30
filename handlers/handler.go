@@ -2,9 +2,19 @@ package handlers
 
 import (
 	"github.com/gofiber/fiber/v2"
+	"github.com/google/uuid"
 	"github.com/raeandres/golang-rest-product.git/database"
 	"github.com/raeandres/golang-rest-product.git/model"
 )
+
+/* create unique randomizer function for productId */
+func generateUniqueId() (string, error) {
+	id, err := uuid.NewRandom()
+	if err != nil {
+		return "", err
+	}
+	return id.String(), nil
+}
 
 func Home(c *fiber.Ctx) error {
 	return c.SendString("Hello, World!")
